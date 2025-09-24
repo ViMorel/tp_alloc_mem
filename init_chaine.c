@@ -40,9 +40,6 @@ void print_free_list() {
     }
     printf(" Free list:\n");
     printf(" Address: %p, Size: %zu bytes\n", (void*) free_list, free_list->bloc_size);
-    HEADER* current = free_list->ptr_next;
-    while (current != NULL) {
-        printf(" Address: %p, Size: %zu bytes\n", (void*) current, current->bloc_size);
-        current = current->ptr_next;
+    
     }
-}
+
