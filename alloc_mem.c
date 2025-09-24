@@ -2,33 +2,42 @@
 #include "alloc_mem.h"
 #include "main.h"
 
-void * malloc_3is(size){
+void * malloc_3is(size_t size){
     void * addr_break;
     addr_break = sbrk(0);
 
-    if(free_space_list.block_size>=size){
+    header *used = NULL;
+    header *free = &free_space_list;
 
-        used_space_list.ptr_next = free_space_list.ptr_next;
-        used_space_list.block_size = size;
-        used_space_list.magic_number = magic;
+    //parcourt les blocks 
+    while(free != NULL){
+        if(free->block_size >= size){
+            
+            used->ptr_next = free->ptr_next;
+            used->block_size = size;
+            used->magic_number = magic;
 
-        free_space_list.ptr_next += size + 1;
-        free_space_list.block_size = free_space_list.block_size - size;
+            free->ptr_next = used->ptr_next + free->block_size + 1;
+            free->block_size = free->block_size - size;
+        };
+    };
+    if(free->ptr_next == NULL){
         
     };
-    if(free_space_list.block_size < size){
 
-        used_space_list.ptr_next = free_space_list.ptr_next;
-        used_space_list.block_size = size;
-        used_space_list.magic_number = magic;
+    //Dans le cas ou il n'y a plus de block assez grand
+    used->ptr_next = free->ptr_next;
+    used->block_size = size;
+    used->magic_number = magic;
 
-        addr_break = sbrk(4096);
-        free_space_list.ptr_next += size + 1;
-        free_space_list.block_size = free_space_list.block_size - size;
-    };
+    addr_break = sbrk(4096);
+    free->ptr_next += size + 1;
+    free->block_size = free->block_size - size;
+
+    return used->ptr_next;
 };
 
-void free_3is(ptr){
-    int number_of_used_block = sizeof(used_space_list);
+void free_3is(void * ptr){
+    //int number_of_used_block = sizeof(used_space_list);
 
 }

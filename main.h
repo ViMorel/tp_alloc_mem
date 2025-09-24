@@ -9,5 +9,5 @@ typedef struct header_tag{
 } header;
 
 
-header free_space_list = {nullptr, 4096, magic};
-header used_space_list = {};
+header free_space_list = {NULL, 4096, magic};
+header used_space_list = {NULL, 0, magic};
