@@ -1,15 +1,20 @@
 #include "init_chaine.h"
+#include "malloc.h"
 #include <stdio.h>
-
-void init_heap_multiple(); 
 
 int main() {
     init_heap();
-    printf("Après init_heap():\n");
+    init_heap_multiple(3);
+
+    printf("Avant malloc_3is():\n");
     print_free_list();
 
-    init_heap_multiple();
-    printf("\nAprès init_heap_multiple():\n");
+    void* ptr1 = malloc_3is(2000);
+    printf("\nAprès malloc_3is(2000):\n");
+    print_free_list();
+
+    void* ptr2 = malloc_3is(5000);
+    printf("\nAprès malloc_3is(5000):\n");
     print_free_list();
 
     return 0;
