@@ -3,9 +3,10 @@
 #include <stdio.h>
 
 #define MAGIC 0x0123456789ABCDEFL
-#define INITIAL_HEAP_SIZE 4096   
+#define INITIAL_HEAP_SIZE 4096
 
-HEADER* free_list = NULL;  
+// définition réelle de free_list
+HEADER* free_list = NULL;
 
 void init_heap() {
     if (free_list != NULL) return;
@@ -19,6 +20,7 @@ void init_heap() {
     free_list = (HEADER*) start;
     free_list->ptr_next = NULL;
     free_list->bloc_size = INITIAL_HEAP_SIZE - sizeof(HEADER);
+    free_list->magic_number = MAGIC;
 }
 
 void print_free_list() {
@@ -26,5 +28,11 @@ void print_free_list() {
         printf("Free list is empty.\n");
         return;
     }
-    printf("Free list:\nAddress: %p, Size: %zu bytes\n", (void*) free_list, free_list->bloc_size);
+
+    printf("Free list:\n");
+    HEADER* current = free_list;
+    while(current != NULL) {
+        printf("Address: %p, Size: %zu bytes\n", (void*) current, current->bloc_size);
+        current = current->ptr_next;
+    }
 }

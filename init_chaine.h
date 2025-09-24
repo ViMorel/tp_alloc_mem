@@ -9,8 +9,9 @@ typedef struct HEADER_TAG {
     long magic_number;
 } HEADER;
 
-
+// déclaration globale de free_list
 extern HEADER* free_list;
+
 
 void init_heap();
 void print_free_list();

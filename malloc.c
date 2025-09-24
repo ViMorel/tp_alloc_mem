@@ -3,12 +3,11 @@
 #include <stdio.h>
 
 #define BLOCK_SIZE 4096
-//#define NB_BLOCKS 3
+#define NB_BLOCKS 3
 #define MAGIC 0x0123456789ABCDEFL
 
 void init_heap_multiple() {
-
-    //for (int i = 0; i < NB_BLOCKS; i++) {
+    for (int i = 0; i < NB_BLOCKS; i++) {
         void* start = sbrk(BLOCK_SIZE);
         if (start == (void*) -1) {
             perror("sbrk failed");
@@ -21,5 +20,5 @@ void init_heap_multiple() {
         block->magic_number = MAGIC;
 
         free_list = block;
-    //}
+    }
 }
